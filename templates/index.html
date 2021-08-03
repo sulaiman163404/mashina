@@ -11,31 +11,20 @@
 	<body class="is-preload">
     {% block content %}
 	<!--  Navbar-->
-			<nav class="navbar navbar-expand-lg navbar-light bg-info" style="text-align: center;">
+			<nav style="text-align: center;">
 				<div class="container-fluid">
-						<a href="{% url 'home' %}"class="navbar-brand">Mashina.kg</a>
-			<!--      is Authenticated-->
-				  {% if not request.user.is_authenticated %}
-						<a href="{% url 'register' %}">Sign Up</a>
-						<a href="{% url 'login' %}">Login</a>
-				  {% else %}
-						 <h4>{{ request.user.username }}</h4>
-						 <a class="nav link-active"  href="{% url 'logout' %}">Logout</a>
-				  {% endif %}
-			<!--     end is Authenticated-->
-
 			<!--      permission to create-->
 				  {% if request.user.is_authenticated and request.user.is_superuser %}
 						 <a href="{% url 'create-product' %}"><img style="width: 20px; height: auto;" src="{% static 'img/plus.png' %}"></a>
 				  {% endif %}
 			<!--      end permission to create-->
 
-						 <a href="{% url 'cart_detail' %}"><img style="width: 30px; height: auto;" src="{% static 'img/cart.png' %}"></a>
+					<a href="{% url 'cart_detail' %}"><img style="width: 30px; height: auto;" src="{% static 'img/cart.png' %}"></a>
 
 			<!--      search-->
 					<form class="d-flex" method="get" action="{% url 'search' %}">
 					<input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-					 <button class="btn btn-success" type="submit">Search</button>
+					 <button class="btn btn-success" type="submit" >Search</button>
 					</form>
 			<!--      end search-->
 				</div>
@@ -49,6 +38,13 @@
 				<div class="inner">
 					<nav>
 						<ul>
+							{% if not request.user.is_authenticated %}
+							<li><a href="{% url 'register' %}">Sign Up</a></li>
+							<li><a href="{% url 'login' %}">Login</a></li>
+							{% else %}
+							<h4>{{ request.user.username }}</h4>
+						    <a class="nav link-active"  href="{% url 'logout' %}">Logout</a>
+				            {% endif %}
 							<li><a href="#intro">Welcome</a></li>
 							<li><a href="#one">Who we are</a></li>
 							<li><a href="#two">What we do</a></li>

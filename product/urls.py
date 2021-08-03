@@ -2,11 +2,13 @@ from django.contrib import admin
 from django.urls import path
 
 from . import views
+from .views import index
 
 from .class_views import *
 
 urlpatterns = [
-    path('', CategorylistView.as_view(), name='home'),
+    path('', index, name='home'),
+    # path('', CategorylistView.as_view(), name='home'),
     path('<str:slug>/', ProductListView.as_view(), name='list'),
     path('product/<int:id>/', ProductDetailView.as_view(), name='detail'),
     path('product/create/', ProductCreateView.as_view(), name='create-product'),
@@ -16,7 +18,7 @@ urlpatterns = [
 
     #cart urls
 
-path('cart/add/<int:id>/', views.cart_add, name='cart_add'),
+    path('cart/add/<int:id>/', views.cart_add, name='cart_add'),
     path('cart/item_clear/<int:id>/', views.item_clear, name='item_clear'),
     path('cart/item_increment/<int:id>/',
          views.item_increment, name='item_increment'),

@@ -8,6 +8,11 @@ from .models import Product
 from django.contrib.auth.decorators import login_required
 from cart.cart import Cart
 
+
+def index(request):
+    return render(request, 'index.html')
+
+
 @login_required()
 def cart_add(request, id):
     cart = Cart(request)

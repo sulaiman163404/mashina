@@ -23,7 +23,7 @@ class SearchListView(ListView):
 
 class CategorylistView(ListView):
     model = Category #Category.objects.all()
-    template_name = 'product/home.html'
+    template_name = 'index.html'
     context_object_name = 'categories'
 
 class ProductListView(ListView):

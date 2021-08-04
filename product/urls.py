@@ -2,13 +2,12 @@ from django.contrib import admin
 from django.urls import path
 
 from . import views
-from .views import index
+
 
 from .class_views import *
 
 urlpatterns = [
-    path('', index, name='home'),
-    # path('', CategorylistView.as_view(), name='home'),
+    path('', CategorylistView.as_view(), name='home'),
     path('<str:slug>/', ProductListView.as_view(), name='list'),
     path('product/<int:id>/', ProductDetailView.as_view(), name='detail'),
     path('product/create/', ProductCreateView.as_view(), name='create-product'),
@@ -25,5 +24,5 @@ urlpatterns = [
     path('cart/item_decrement/<int:id>/',
          views.item_decrement, name='item_decrement'),
     path('cart/cart_clear/', views.cart_clear, name='cart_clear'),
-    path('cart/cart-detail/', views.cart_detail,name='cart_detail'),
+    path('cart/cart-detail/', views.cart_detail, name='cart_detail'),
 ]

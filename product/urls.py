@@ -4,7 +4,7 @@ from django.urls import path
 from . import views
 
 
-from .class_views import *
+from .views import *
 
 urlpatterns = [
     path('', CategorylistView.as_view(), name='home'),

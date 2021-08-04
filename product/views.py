@@ -1,15 +1,91 @@
-from django.shortcuts import render, redirect, get_object_or_404
-
-from product.forms import CreateProductForm, UpdateProductForm
-from product.models import Category, Product
-
 from django.shortcuts import render, redirect
-from .models import Product
 from django.contrib.auth.decorators import login_required
 from cart.cart import Cart
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.db.models import Q
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .forms import CreateProductForm, UpdateProductForm
+from .models import Category, Product
+
+
+class SearchListView(ListView):
+    model = Product # Product.objects.all()
+    template_name = 'product/search.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # print(self.request.GET)
+        q = self.request.GET.get('q')
+        if not q:
+            return Product.objects.none()
+        queryset = queryset.filter(Q(name__icontains=q) | Q(description__icontains=q))
+        return queryset
+
+class CategorylistView(ListView):
+    model = Category #Category.objects.all()
+    template_name = 'index.html'
+    context_object_name = 'categories'
+
+class ProductListView(ListView):
+    model = Product #Product.objects.all()
+    template_name = 'product/list.html'
+    context_object_name = 'products'
+    paginate_by = 2
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        slug = self.kwargs.get('slug')
+        queryset = queryset.filter(category__slug=slug)
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.kwargs.get('slug')
+        return context
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product/detail.html'
+    context_object_name = 'product'
+    pk_url_kwarg = 'id'
+
+class IsAdminCheckMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_superuser
 
 
 
+class ProductCreateView(IsAdminCheckMixin, CreateView):
+    model = Product
+    template_name = 'product/create_product.html'
+    form_class = CreateProductForm
+    context_object_name = 'product_form'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['product_form'] = self.get_form(self.get_form_class())
+        return context
+
+class ProductUpdateView(IsAdminCheckMixin, UpdateView):
+    model = Product
+    template_name = 'product/update_product.html'
+    form_class = UpdateProductForm
+    pk_url_kwarg = 'id'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['product_form'] = self.get_form(self.get_form_class())
+        return context
+
+class ProductDeleteView(IsAdminCheckMixin, DeleteView):
+    model = Product
+    template_name = 'product/delete_product.html'
+    pk_url_kwarg = 'id'
+
+    def get_success_url(self):
+        return reverse('home')
 
 
 @login_required()
@@ -56,54 +132,3 @@ def cart_detail(request):
     return render(request, 'cart/cart_detail.html')
 
 
-
-
-
-
-
-#
-# def  home_page(request):
-#     categories = Category.objects.all()
-#     print(categories)
-#     #select * from category
-#     return render(request, 'product/home.html', {'categories': categories})
-#
-#
-# def product_list(request, slug):
-#     products = Product.objects.filter(category__slug=slug)
-#     return render(request, 'product/list.html', locals())
-#
-#
-# def product_detail(request, id):
-#     product = Product.objects.get(id=id)
-#     # print(product)
-#     return render(request, 'product/detail.html', {'product': product})
-#
-#
-#
-# def create_product(request):
-#     if request.method == 'POST':
-#         product_form = CreateProductForm(request.POST, request.FILES)
-#         if product_form.is_valid():
-#             product = product_form.save()
-#             return redirect(product.get_absolute_url())
-#     else:
-#         product_form = CreateProductForm()
-#     return render(request, 'product/create_product.html', {'product_form': product_form})
-#
-# def update_product(request, id):
-#     product = get_object_or_404(Product, pk=id)
-#     product_form = UpdateProductForm(request.POST or None, request.FILES or None, instance=product)
-#
-#     if product_form.is_valid():
-#         product_form.save()
-#         return redirect(product.get_absolute_url())
-#     return render(request, 'product/update_product.html', {'product_form': product_form})
-#
-# def delete_product(request, id):
-#     product = get_object_or_404(Product, pk=id)
-#     if request.method == 'POST':
-#         slug = product.category.slug
-#         product.delete()
-#         return redirect('list', slug)
-#     return render(request, 'product/delete_product.html', {'product': product})

@@ -9,10 +9,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-<!--    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>-->
-
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
@@ -42,13 +38,13 @@
         <div class="col-1">
 
             {% if request.user.is_authenticated and request.user.is_superuser %}
-            <a href="{% url 'create-product' %}"><img style="width: 20px; height: auto;"
+            <a href="{% url 'create-product' %}"><img style="width: 20px; height: auto; margin: 10px;"
                                                       src="{% static 'img/plus.png' %}"></a>
             {% endif %}
 
             <!--      end permission to create-->
 
-            <a href="{% url 'cart_detail' %}"><img style="width: 30px; height: auto;" src="{% static 'img/cart.png' %}"></a>
+            <a href="{% url 'cart_detail' %}"><img style="width: 30px; height: auto; margin: 10px;" src="{% static 'img/favorite.png' %}"></a>
         </div>
 
         <div class="col-3"></div>
@@ -103,15 +99,10 @@
     <div class="inner">
         <nav>
             <ul>
-                {% if not request.user.is_authenticated %}
-<!--                <li><a href="{% url 'register' %}">Sign Up</a></li>-->
-<!--                <li><a href="{% url 'login' %}">Login</a></li>-->
-
-                {% endif %}
+                <li><h2>Mashina.kg</h2></li>
                 <li><a href="#intro">Welcome</a></li>
-                <li><a href="#one">Who we are</a></li>
-                <li><a href="#two">What we do</a></li>
-                <li><a href="#three">Get in touch</a></li>
+                <li><a href="#one">Cars List</a></li>
+                <li><a href="#three">Contacts</a></li>
             </ul>
         </nav>
     </div>
@@ -136,16 +127,15 @@
     <!-- One -->
     <section id="one" class="wrapper style2 spotlights">
         <section>
-            <a href="#" class="image"><img src="images/pic01.jpg" alt="" data-position="center center"/></a>
+            <a href="#one" class="image"><img src="{% static 'img/avtocad.jpg' %}" alt="" data-position="center center"/></a>
             <div class="content">
                 <div class="inner">
-                    <h2>Sed ipsum dolor</h2>
-                    <p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat
-                        malesuada quis. Aliquam dapibus.</p>
+                    <h2>Machines that you can buy from us!</h2>
+                    <p><small>We sell cars in all CIS countries, delivery costs a penny, and most importantly, you can buy a car according to any taste, in any colors and configurations. Stamps that you can buy and with which we cooperate !!!</small></p>
                         <ol>
                             {% for category in categories %}
                             {% if category.products.all %}
-                            <ol style="color: #eeeeee;"><a href="{% url 'list' category.slug %}">{{ category.title }}</a></ol>
+                            <ol style="font-size: 20px; color: #eeeeee;"><a href="{% url 'list' category.slug %}">{{ category.title }}</a></ol>
                             {% endif %}
                             {% endfor %}
                         </ol>
@@ -156,32 +146,8 @@
     <!-- Three -->
     <section id="three" class="wrapper style1 fade-up">
         <div class="inner">
-            <h2>Get in touch</h2>
-            <p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada
-                quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit
-                quis lorem.</p>
+            <h2>Our Contacts</h2>
             <div class="split style1">
-                <section>
-                    <form method="post" action="#">
-                        <div class="fields">
-                            <div class="field half">
-                                <label for="name">Name</label>
-                                <input type="text" name="name" id="name"/>
-                            </div>
-                            <div class="field half">
-                                <label for="email">Email</label>
-                                <input type="text" name="email" id="email"/>
-                            </div>
-                            <div class="field">
-                                <label for="message">Message</label>
-                                <textarea name="message" id="message" rows="5"></textarea>
-                            </div>
-                        </div>
-                        <ul class="actions">
-                            <li><a href="" class="button submit">Send Message</a></li>
-                        </ul>
-                    </form>
-                </section>
                 <section>
                     <ul class="contact">
                         <li>

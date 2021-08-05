@@ -4,4 +4,3 @@ from .models import Product, Category
 admin.site.register(Category)
 admin.site.register(Product)
 
-#TODO: создать категории Smartphones(Samsung, Iphone, Xiaomi), Notebooks(Macbook, Asus, Acer), Earphones

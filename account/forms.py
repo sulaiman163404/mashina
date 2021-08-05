@@ -32,10 +32,5 @@ class RegistrationForm(forms.ModelForm):
         if password != password_confirm:
             raise forms.ValidationError('Пароли не совпадают!')
         return data
-    #
-    # def save(self, commit=True):
-    #     from .utils import send_welcome_email
-    #     user = User.objects.create_user(**self.cleaned_data)
-    #     send_welcome_email(user.email)
-    #     return user
+
 

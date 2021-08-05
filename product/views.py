@@ -52,6 +52,12 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
     pk_url_kwarg = 'id'
 
+class ProfileView(DetailView):
+    model = User
+    template_name = 'product/profile.html'
+    context_object_name = 'profile'
+
+
 class IsAdminCheckMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_authenticated and self.request.user.is_superuser

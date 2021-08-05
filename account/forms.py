@@ -6,10 +6,11 @@ class RegistrationForm(forms.ModelForm):
     username = forms.CharField(max_length=150, required=True)
     password = forms.CharField(min_length=8, required=True, widget=forms.PasswordInput)
     password_confirmation = forms.CharField(min_length=8, required=True, widget=forms.PasswordInput)
+    images = forms.ImageField()
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'password_confirmation',)
+        fields = ('username', 'email', 'password', 'password_confirmation', 'images')
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

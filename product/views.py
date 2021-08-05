@@ -5,18 +5,18 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models import Q
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .forms import CreateProductForm, UpdateProductForm
-from .models import Category, Product
+from .forms import *
+from .models import *
+
 
 
 class SearchListView(ListView):
-    model = Product # Product.objects.all()
+    model = Product  # Product.objects.all()
     template_name = 'product/search.html'
     context_object_name = 'products'
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        # print(self.request.GET)
         q = self.request.GET.get('q')
         if not q:
             return Product.objects.none()
@@ -27,6 +27,7 @@ class CategorylistView(ListView):
     model = Category #Category.objects.all()
     template_name = 'index.html'
     context_object_name = 'categories'
+
 
 class ProductListView(ListView):
     model = Product #Product.objects.all()
@@ -55,6 +56,11 @@ class IsAdminCheckMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_authenticated and self.request.user.is_superuser
 
+class AddReview(IsAdminCheckMixin, ListView):
+    model = Reviews
+    template_name = 'product/review.html'
+    form_class = ReviewForm
+    context_object_name = 'review'
 
 
 class ProductCreateView(IsAdminCheckMixin, CreateView):
@@ -86,6 +92,7 @@ class ProductDeleteView(IsAdminCheckMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('home')
+
 
 
 @login_required()

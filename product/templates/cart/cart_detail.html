@@ -3,20 +3,20 @@
 
 {% block content %}
 {% for key,product in request.session.cart.items %}
-  <div class="card" style="width: 18rem;">
+  <div class="card" style="width: 18rem; margin-top: 20px; ">
   <img src="{{ product.image }}" class="card-img-top" alt="...">
-  <div class="card-body">
+  <div class="card-body" style="align-content: center">
     <h5 class="card-title">{{ product.name }}</h5>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">{{ product.price }}</li>
+    <li class="list-group-item">Price: {{ product.price }}</li>
     <li class="list-group-item">{{ product.quantity}}</li>
-    <li class="list-group-item">Total: {{ product.price|multiply:product.quantity }}</li>
+    <li class="list-group-item">Total price: {{ product.price|multiply:product.quantity }}</li>
   </ul>
   <div class="card-body">
-    <a href="{% url 'item_increment' key %}" class="card-link"><span>&#43;</span></a>
+    <a style="text-decoration: none; font-size: 20px;" href="{% url 'item_increment' key %}" class="card-link"><span>&#43;</span></a>
     {% if not product.quantity == 1 %}
-    <a href="{% url 'item_decrement' key %}" class="card-link"><span>&#8722;</span></a>
+    <a style="text-decoration: none; font-size: 20px" href="{% url 'item_decrement' key %}" class="card-link"><span>&#8722;</span></a>
     {% endif %}
   </div>
     <a class="btn btn-danger" href="{% url 'item_clear' key %}" role="button">Remove</a>

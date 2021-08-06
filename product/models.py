@@ -34,12 +34,7 @@ class Product(models.Model):
         ordering = ['-id']
 
 
-class Reviews(models.Model):
-    name = models.CharField(max_length=50)
-    text = models.TextField('Review', max_length=500)
 
-    def __str__(self):
-        return self.text
 
 
 

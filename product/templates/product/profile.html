@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-  <div class="card mb-3" style="max-width: 800px;">
+  <div class="card mb-3" style="width: 800px;">
     <div class="row g-0">
-      <div class="col-md-4">
-      <img style="width: 300px; height: auto;" src="{{ request.user.image }}" class="img-fluid rounded-start" alt="...">
-    </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">{{ request.user.username }}</h5>
-        <h5 class="card-text">{{ request.user.email }}</h5>
+        <h2 class="card-title">{{ profile.username }}</h2>
+          <p class="card-title">{{ request.user.name }}</p>
+          <p class="card-title">{{ user.surname }}</p>
+        <p class="card-text">EMAIL -> {{ profile.email }}</p>
       </div>
     </div>
   </div>

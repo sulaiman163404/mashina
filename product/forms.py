@@ -13,8 +13,5 @@ class UpdateProductForm(forms.ModelForm):
         model = Product
         fields = "__all__"
 
-class ReviewForm(forms.ModelForm):
-    class Meta:
-        model = Reviews
-        fields = "__all__"
+
 

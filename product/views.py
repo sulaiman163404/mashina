@@ -23,6 +23,7 @@ class SearchListView(ListView):
         queryset = queryset.filter(Q(name__icontains=q) | Q(description__icontains=q))
         return queryset
 
+
 class CategorylistView(ListView):
     model = Category #Category.objects.all()
     template_name = 'index.html'
@@ -46,11 +47,13 @@ class ProductListView(ListView):
         context['category'] = self.kwargs.get('slug')
         return context
 
+
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'product/detail.html'
     context_object_name = 'product'
     pk_url_kwarg = 'id'
+
 
 class ProfileView(DetailView):
     model = User
@@ -62,11 +65,7 @@ class IsAdminCheckMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_authenticated and self.request.user.is_superuser
 
-class AddReview(IsAdminCheckMixin, ListView):
-    model = Reviews
-    template_name = 'product/review.html'
-    form_class = ReviewForm
-    context_object_name = 'review'
+
 
 
 class ProductCreateView(IsAdminCheckMixin, CreateView):
@@ -80,6 +79,7 @@ class ProductCreateView(IsAdminCheckMixin, CreateView):
         context['product_form'] = self.get_form(self.get_form_class())
         return context
 
+
 class ProductUpdateView(IsAdminCheckMixin, UpdateView):
     model = Product
     template_name = 'product/update_product.html'
@@ -90,6 +90,7 @@ class ProductUpdateView(IsAdminCheckMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['product_form'] = self.get_form(self.get_form_class())
         return context
+
 
 class ProductDeleteView(IsAdminCheckMixin, DeleteView):
     model = Product

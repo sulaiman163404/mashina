@@ -5,28 +5,30 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.db.models import Q
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .forms import CreateProductForm, UpdateProductForm
-from .models import Category, Product
+from .forms import *
+from .models import *
+
 
 
 class SearchListView(ListView):
-    model = Product # Product.objects.all()
+    model = Product  # Product.objects.all()
     template_name = 'product/search.html'
     context_object_name = 'products'
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        # print(self.request.GET)
         q = self.request.GET.get('q')
         if not q:
             return Product.objects.none()
         queryset = queryset.filter(Q(name__icontains=q) | Q(description__icontains=q))
         return queryset
 
+
 class CategorylistView(ListView):
     model = Category #Category.objects.all()
     template_name = 'index.html'
     context_object_name = 'categories'
+
 
 class ProductListView(ListView):
     model = Product #Product.objects.all()
@@ -45,15 +47,24 @@ class ProductListView(ListView):
         context['category'] = self.kwargs.get('slug')
         return context
 
+
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'product/detail.html'
     context_object_name = 'product'
     pk_url_kwarg = 'id'
 
+
+class ProfileView(DetailView):
+    model = User
+    template_name = 'product/profile.html'
+    context_object_name = 'profile'
+
+
 class IsAdminCheckMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_authenticated and self.request.user.is_superuser
+
 
 
 
@@ -68,6 +79,7 @@ class ProductCreateView(IsAdminCheckMixin, CreateView):
         context['product_form'] = self.get_form(self.get_form_class())
         return context
 
+
 class ProductUpdateView(IsAdminCheckMixin, UpdateView):
     model = Product
     template_name = 'product/update_product.html'
@@ -79,6 +91,7 @@ class ProductUpdateView(IsAdminCheckMixin, UpdateView):
         context['product_form'] = self.get_form(self.get_form_class())
         return context
 
+
 class ProductDeleteView(IsAdminCheckMixin, DeleteView):
     model = Product
     template_name = 'product/delete_product.html'
@@ -86,6 +99,7 @@ class ProductDeleteView(IsAdminCheckMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('home')
+
 
 
 @login_required()

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import *
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -21,3 +21,4 @@ class RegisterView(CreateView):
 class SignInView(LoginView):
     template_name = 'account/login.html'
     success_url = reverse_lazy('home')
+

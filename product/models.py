@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 class Category(models.Model):
@@ -13,11 +14,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    STATUS_CHOICES = (
-        ('in stock', 'В наличии'),
-        ('out of stock', 'Нет в наличии'),
-        ('waiting', 'Ожидается')
-    )
+    STATUS_CHOICES = (('in stock', 'In stock'),('out of stock', 'Out of stock'),('waiting', 'Waiting!'))
     name = models.CharField(max_length=100)
     status = models.CharField(choices=STATUS_CHOICES, max_length=20)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -35,3 +32,9 @@ class Product(models.Model):
 
     class Meta:
         ordering = ['-id']
+
+
+
+
+
+

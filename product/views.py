@@ -24,14 +24,9 @@ class SearchListView(ListView):
         return queryset
 
 
-class CategorylistView(ListView):
-    model = Category #Category.objects.all()
-    template_name = 'index.html'
-    context_object_name = 'categories'
-
 
 class ProductListView(ListView):
-    model = Product #Product.objects.all()
+    model = Product
     template_name = 'product/list.html'
     context_object_name = 'products'
     paginate_by = 2
@@ -47,6 +42,28 @@ class ProductListView(ListView):
         context['category'] = self.kwargs.get('slug')
         return context
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class CategorylistView(ListView):
+    model = Category #Category.objects.all()
+    template_name = 'index.html'
+    context_object_name = 'categories'
 
 class ProductDetailView(DetailView):
     model = Product
@@ -64,7 +81,6 @@ class ProfileView(DetailView):
 class IsAdminCheckMixin(UserPassesTestMixin):
     def test_func(self):
         return self.request.user.is_authenticated and self.request.user.is_superuser
-
 
 
 

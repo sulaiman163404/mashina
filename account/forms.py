@@ -4,8 +4,6 @@ from django.contrib.auth.models import User
 
 class RegistrationForm(forms.ModelForm):
     username = forms.CharField(max_length=150, required=True)
-    name = forms.CharField(max_length=30)
-    surname = forms.CharField(max_length=30)
     password = forms.CharField(min_length=8, required=True, widget=forms.PasswordInput)
     password_confirmation = forms.CharField(min_length=8, required=True, widget=forms.PasswordInput)
 

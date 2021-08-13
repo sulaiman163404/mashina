@@ -29,7 +29,7 @@ class ProductListView(ListView):
     model = Product
     template_name = 'product/list.html'
     context_object_name = 'products'
-    paginate_by = 2
+    paginate_by = 1
 
     def get_queryset(self):
         queryset = super().get_queryset()

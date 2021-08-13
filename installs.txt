@@ -4,3 +4,4 @@ Pillow==7.1
 django-crispy-forms
 python-decouple==3
 django-shopping-cart==0.1
+gunicorn==20.0.4
